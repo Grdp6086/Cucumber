@@ -10,13 +10,14 @@ public class DataHelper {
         return new VerificationCode("12345");
     }
 
-public static CardInfo cardInfo(String card){
+    public static CardInfo cardInfo(String card) {
         return new CardInfo(card);
 
     }
-public static AuthInfo getAuth(String login, String password){
+
+    public static AuthInfo getAuth(String login, String password) {
         return new AuthInfo(login, password);
-}
+    }
 
 
     @Value
