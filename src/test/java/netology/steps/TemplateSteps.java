@@ -28,9 +28,9 @@ public class TemplateSteps {
         dashboardPage = verificationPage.validVerify(verificationCode);
     }
 
-    @Когда("пользователь переводит {string} рублей на карту с номером {string} на свою первую карту с главной страницы")
-    public void transferSecondToFirst(String amountCard, String card) {
-        var firstCard = cardInfo("5559 0000 0000 0001");
+    @Когда("пользователь переводит {string} рублей на карту с номером {string} на свою карту {string}.")
+    public void transferSecondToFirst(String amountCard, String card, String cardOffMoney) {
+        var firstCard = cardInfo(cardOffMoney);
         var secondCard = cardInfo(card);
         var firstCardBalance = dashboardPage.getCardBalance(firstCard);
         var secondCardBalance = dashboardPage.getCardBalance(secondCard);
@@ -41,9 +41,9 @@ public class TemplateSteps {
     }
 
 
-    @Тогда("тогда баланс его 1 карты  из списка на главной странице должен стать {string} рублей.")
-    public void verifyTransfer(String balance) {
-        var firstCard = cardInfo("5559 0000 0000 0001");
+    @Тогда("тогда баланс его карты {string} из списка на главной странице должен стать {string} рублей.")
+    public void verifyTransfer(String cardOffMoney, String balance) {
+        var firstCard = cardInfo(cardOffMoney);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCard);
         Assertions.assertEquals(Integer.parseInt(balance), actualBalanceFirstCard);
     }
