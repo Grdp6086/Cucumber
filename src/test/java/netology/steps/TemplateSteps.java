@@ -20,14 +20,14 @@ public class TemplateSteps {
         dashboardPage = verificationPage.validVerify(verificationCode);
     }
 
-    @Когда("пользователь переводит {string} рублей на карту с номером {string} на свою карту {string}.")
-    public void transferSecondToFirst(String amountCard, String card, String cardOffMoney) {
-        var firstCard = cardInfo(cardOffMoney);
+    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою карту {string}.")
+    public void transferSecondToFirst(String amountCard, String card, String cardIndex) {
+        var index = Integer.parseInt(cardIndex) - 1;
         var secondCard = cardInfo(card);
-        var firstCardBalance = dashboardPage.getCardBalance(firstCard);
-        var secondCardBalance = dashboardPage.getCardBalance(secondCard);
+        dashboardPage.getCardBalance(index);
+        dashboardPage.getCardBalance(secondCard);
         var amount = Integer.parseInt(amountCard);
-        var transferPage = dashboardPage.selectCardToTransfer(secondCard);
+        var transferPage = dashboardPage.selectCardToTransfer(getSecondCardTestId());
         dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), secondCard);
 
     }
