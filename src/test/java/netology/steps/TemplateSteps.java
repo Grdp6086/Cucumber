@@ -23,22 +23,16 @@ public class TemplateSteps {
     @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою карту {string}.")
     public void transferSecondToFirst(String amountCard, String card, String cardIndex) {
         var index = Integer.parseInt(cardIndex) - 1;
-        var secondCard = cardInfo(card);
-        dashboardPage.getCardBalance(index);
-        dashboardPage.getCardBalance(secondCard);
         var amount = Integer.parseInt(amountCard);
-        var transferPage = dashboardPage.selectCardToTransfer(getSecondCardTestId());
-        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), secondCard);
+        var transferPage = dashboardPage.selectCardToTransfer(findTestIdByIndex(index));
+        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), cardInfo(card));
 
     }
 
 
     @Тогда("тогда баланс его карты {string} из списка на главной странице должен стать {string} рублей.")
     public void verifyTransfer(String cardOffMoney, String balance) {
-        var firstCard = cardInfo(cardOffMoney);
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCard);
-        Assertions.assertEquals(Integer.parseInt(balance), actualBalanceFirstCard);
+        Assertions.assertEquals(Integer.parseInt(balance), dashboardPage.getCardBalance(cardInfo(cardOffMoney)));
     }
-
 
 }
